@@ -22,25 +22,25 @@ def decrypt(image_array, key):
 def save(image_array, filename):
     img = Image.fromarray(image_array)
     download = BytesIO()
-    img.save(download, format="PNG")  # Save image to a bytes buffer
+    img.save(download, format="PNG")
     return download
 
-# Streamlit application layout
+# ---- Streamlit ----
 st.title("Pixel Manipulation for Image Encryption")
 
-uploaded_file = st.file_uploader("Upload an Image:", type=["jpg", "jpeg", "png"])
+input = st.file_uploader("Upload an Image:", type=["jpg", "jpeg", "png"])
 
 shift_key = st.text_input("Enter Key (0-255):")
 
-action = st.selectbox("Select Action", ["Encryption", "Decryption"])
+choice = st.selectbox("Select Action", ["Encryption", "Decryption"])
 
-if uploaded_file is not None:
+if input is not None:
     image = Image.open(uploaded_file).convert('RGB')
     img_array = preprocess_image(image)
 
     st.image(image, caption='Original Image', use_column_width=True)
 
-    if action == "Encryption":
+    if choice == "Encryption":
         if st.button("Encrypt"):
             try:
                 key = int(shift_key)
@@ -60,7 +60,7 @@ if uploaded_file is not None:
             except ValueError:
                 st.error("Invalid key. Please enter a numeric value.")
 
-    elif action == "Decryption":
+    elif choice == "Decryption":
         if st.button("Decrypt"):
             try:
                 key = int(shift_key)
