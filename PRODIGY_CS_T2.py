@@ -35,7 +35,7 @@ shift_key = st.text_input("Enter Key (0-255):")
 choice = st.selectbox("Select Action", ["Encryption", "Decryption"])
 
 if input is not None:
-    image = Image.open(uploaded_file).convert('RGB')
+    image = Image.open(input).convert('RGB')
     img_array = preprocess_image(image)
 
     st.image(image, caption='Original Image', use_column_width=True)
