@@ -19,7 +19,7 @@ def decrypt(image_array, key):
     decrypted_image = (rotated_image + key) % 256 
     return decrypted_image.astype(np.uint8)
 
-def get_image_download_link(image_array, filename):
+def save(image_array, filename):
     img = Image.fromarray(image_array)
     download = BytesIO()
     img.save(download, format="PNG")  # Save image to a bytes buffer
@@ -41,14 +41,14 @@ if uploaded_file is not None:
     st.image(image, caption='Original Image', use_column_width=True)
 
     if action == "Encryption":
-        if st.button("Encryption"):
+        if st.button("Encrypt"):
             try:
                 key = int(shift_key)
                 if 0 <= key <= 255:
                     encrypted_image = encrypt(img_array, key)
                     st.image(encrypted_image, caption='Encrypted Image', use_column_width=True)
 
-                    eimage = get_image_download_link(encrypted_image, 'eimage.png')
+                    eimage = save(encrypted_image, 'eimage.png')
                     st.download_button(
                         label="Download Encrypted Image",
                         data=eimage.getvalue(),
@@ -61,14 +61,14 @@ if uploaded_file is not None:
                 st.error("Invalid key. Please enter a numeric value.")
 
     elif action == "Decryption":
-        if st.button("Decryption"):
+        if st.button("Decrypt"):
             try:
                 key = int(shift_key)
                 if 0 <= key <= 255:
                     decrypted_image = decrypt(img_array, key)  
                     st.image(decrypted_image, caption='Decrypted Image', use_column_width=True)
 
-                    dimage = get_image_download_link(decrypted_image, 'dimage.png')
+                    dimage = save(decrypted_image, 'dimage.png')
                     st.download_button(
                         label="Download Decrypted Image",
                         data=dimage.getvalue(),
