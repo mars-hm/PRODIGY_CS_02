@@ -26,7 +26,10 @@ def save(image_array, filename):
     return download
 
 # ---- Streamlit ----
-st.title("Pixel Manipulation for Image Encryption")
+st.markdown(
+    "<h1 style='text-align: center;'>Pixel Manipulation for Image Encryption</h1>", 
+    unsafe_allow_html=True
+)
 
 input = st.file_uploader("Upload an Image:", type=["jpg", "jpeg", "png"])
 
